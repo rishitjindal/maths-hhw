@@ -16,115 +16,92 @@ const flashcards = [
     { question: "Select polynomials with degree > 2:", hint: "Check the exponent.", options: ["x³ + x²", "x + 1", "x² + 3x", "x⁴ - 5"], answer: [0, 3] },
 ];
 
-let score = 0, current = -1, asked = [], selected = [], answers = [];
+let score = 0;
+let asked = [];
+let current = -1;
+let selected = [];
+let showAnswer = false;
 
-const rollButton = document.getElementById('rollButton');
-const questionGrid = document.getElementById('questionGrid');
-const instructionCard = document.getElementById('instructionCard');
-const questionCard = document.getElementById('questionCard');
-const resultCard = document.getElementById('resultCard');
-const questionText = document.getElementById('questionText');
-const hintButton = document.getElementById('hintButton');
-const hintText = document.getElementById('hintText');
-const optionsDiv = document.getElementById('options');
-const submitButton = document.getElementById('submitButton');
-const finalScore = document.getElementById('finalScore');
-const summaryDiv = document.getElementById('summary');
+const questionButtonsDiv = document.getElementById('questionButtons');
+const quizArea = document.getElementById('quizArea');
 
-flashcards.forEach((_, i) => {
+flashcards.forEach((_, index) => {
     const btn = document.createElement('button');
-    btn.textContent = `Q${i + 1}`;
+    btn.textContent = `Q${index + 1}`;
     btn.disabled = true;
-    btn.id = `q${i}`;
-    questionGrid.appendChild(btn);
+    btn.id = `btn-${index}`;
+    questionButtonsDiv.appendChild(btn);
 });
 
-rollButton.onclick = () => {
-    if (asked.length >= flashcards.length) {
-        showResults();
-        return;
-    }
-
-    let available = flashcards.map((_, i) => i).filter(i => !asked.includes(i));
-    current = available[Math.floor(Math.random() * available.length)];
-    asked.push(current);
-
-    document.querySelectorAll('.grid button').forEach((b, i) => {
-        b.classList.toggle('active', i === current);
-    });
-
-    instructionCard.style.display = 'none';
-    questionCard.style.display = 'block';
-    showQuestion();
-};
-
 function showQuestion() {
-    const card = flashcards[current];
-    questionText.textContent = `Q${current + 1}: ${card.question}`;
-    hintText.style.display = 'none';
-    hintText.textContent = `Hint: ${card.hint}`;
-    selected = [];
-    optionsDiv.innerHTML = '';
+    quizArea.innerHTML = '';
 
-    card.options.forEach((opt, i) => {
-        const label = document.createElement('label');
-        label.className = 'option';
-        const input = document.createElement('input');
-        input.type = 'checkbox';
-        input.value = i;
-        input.onclick = () => {
-            if (current < 10) { // MCQ
-                selected = [i];
-                document.querySelectorAll('#options input').forEach(inp => {
-                    if (inp !== input) inp.checked = false;
-                });
-            } else { // Multiple choice
-                if (input.checked) selected.push(i);
-                else selected = selected.filter(val => val !== i);
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const questionText = document.createElement('p');
+    questionText.textContent = `Q${current + 1}: ${flashcards[current].question}`;
+
+    const hintButton = document.createElement('button');
+    hintButton.textContent = 'Show Hint';
+    hintButton.addEventListener('click', () => {
+        const hintDiv = document.createElement('div');
+        hintDiv.className = 'hint';
+        hintDiv.textContent = flashcards[current].hint;
+        card.appendChild(hintDiv);
+        hintButton.disabled = true;
+    });
+
+    card.appendChild(questionText);
+    card.appendChild(hintButton);
+
+    flashcards[current].options.forEach((opt, i) => {
+        const optBtn = document.createElement('button');
+        optBtn.textContent = opt;
+        optBtn.className = 'option-button';
+        optBtn.addEventListener('click', () => {
+            if (!showAnswer) {
+                if (!selected.includes(i)) {
+                    selected.push(i);
+                    optBtn.classList.add('active');
+                } else {
+                    selected = selected.filter(x => x !== i);
+                    optBtn.classList.remove('active');
+                }
             }
-        };
-        label.appendChild(input);
-        label.appendChild(document.createTextNode(opt));
-        optionsDiv.appendChild(label);
-    });
-}
-
-hintButton.onclick = () => {
-    hintText.style.display = hintText.style.display === 'none' ? 'block' : 'none';
-};
-
-submitButton.onclick = () => {
-    if (selected.length === 0) return;
-
-    const correct = flashcards[current].answer;
-    if (correct.length === selected.length && selected.every(val => correct.includes(val))) {
-        score += 10;
-    }
-    answers[current] = selected;
-
-    if (asked.length >= flashcards.length) {
-        showResults();
-    } else {
-        questionCard.style.display = 'none';
-    }
-};
-
-function showResults() {
-    rollButton.style.display = 'none';
-    questionCard.style.display = 'none';
-    instructionCard.style.display = 'none';
-    resultCard.style.display = 'block';
-    finalScore.textContent = score;
-
-    summaryDiv.innerHTML = '';
-    flashcards.forEach((card, idx) => {
-        const div = document.createElement('div');
-        div.innerHTML = `<strong>Q${idx + 1}:</strong> ${card.question}<br>`;
-        card.options.forEach((opt, i) => {
-            if (card.answer.includes(i)) div.innerHTML += `<span style="color:green;">✔️ ${opt}</span><br>`;
-            else if (answers[idx] && answers[idx].includes(i)) div.innerHTML += `<span style="color:red;">❌ ${opt}</span><br>`;
         });
-        summaryDiv.appendChild(div);
-        summaryDiv.appendChild(document.createElement('hr'));
+        card.appendChild(optBtn);
     });
+
+    const submitBtn = document.createElement('button');
+    submitBtn.textContent = 'Submit';
+    submitBtn.addEventListener('click', () => {
+        const correctAnswers = flashcards[current].answer;
+        const isCorrect = correctAnswers.length === selected.length && selected.every(val => correctAnswers.includes(val));
+        if (isCorrect) score += 10;
+        showAnswer = true;
+        selected = [];
+        document.getElementById(`btn-${current}`).classList.add('active');
+        submitBtn.disabled = true;
+    });
+
+    card.appendChild(submitBtn);
+
+    quizArea.appendChild(card);
 }
+
+function rollDice() {
+    if (asked.length >= flashcards.length) return;
+
+    const available = flashcards.map((_, i) => i).filter(i => !asked.includes(i));
+    const next = available[Math.floor(Math.random() * available.length)];
+
+    current = next;
+    asked.push(next);
+    showAnswer = false;
+    selected = [];
+
+    showQuestion();
+}
+
+document.getElementById('rollButton').addEventListener('click', rollDice);
