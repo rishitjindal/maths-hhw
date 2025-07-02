@@ -1,3 +1,4 @@
+// Same JavaScript you confirmed working last time
 const flashcards = [
     { question: "Identify the degree: 3x³ - 5x + 2", hint: "Check the highest power of x.", options: ["1", "2", "3", "0"], answer: [2] },
     { question: "Factorize: x² - 9", hint: "It's a difference of squares.", options: ["(x - 3)(x + 3)", "x(x - 9)", "(x - 9)(x + 1)", "x² + 9"], answer: [0] },
