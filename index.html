@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Polynomial Quiz Game</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polynomial Quiz Game</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>🧠 Polynomial Quiz Game</h1>
+    <div class="container">
+        <h1>🧠 Polynomial Quiz Game</h1>
 
-    <div class="grid" id="questionGrid"></div>
+        <div class="grid" id="questionGrid"></div>
 
-    <button id="rollButton">🎲 Roll Dice to Choose a Question</button>
+        <button id="rollButton">🎲 Roll Dice to Choose a Question</button>
 
-    <div id="instructionCard" class="card">
-      <h2>Instructions</h2>
-      <ul>
-        <li>This quiz contains 15 questions based on polynomials.</li>
-        <li>The first 10 questions are MCQs, and the last 5 are optional multiple-choice.</li>
-        <li>Click the dice to get a random question. Each correct question gives 10 points.</li>
-        <li>Your score and solution summary will appear at the end.</li>
-      </ul>
+        <div id="instructionCard" class="card">
+            <h2>Instructions</h2>
+            <ul>
+                <li>This quiz contains 15 questions based on polynomials.</li>
+                <li>The first 10 questions are MCQs, and the last 5 are optional multiple-choice.</li>
+                <li>Click the dice to get a random question. Each correct question gives 10 points.</li>
+                <li>Your score and solution summary will appear at the end.</li>
+            </ul>
+        </div>
+
+        <div id="questionCard" class="card" style="display:none;">
+            <h3 id="questionText"></h3>
+            <button id="hintButton">💡 Show Hint</button>
+            <p id="hintText" style="display:none;"></p>
+            <div id="options"></div>
+            <button id="submitButton">Submit Answer</button>
+        </div>
+
+        <div id="resultCard" class="card" style="display:none;">
+            <h2>🎉 Quiz Complete!</h2>
+            <p>Your final score is: <span id="finalScore"></span></p>
+            <div id="summary"></div>
+        </div>
     </div>
 
-    <div id="questionCard" class="card" style="display:none;">
-      <h3 id="questionText"></h3>
-      <button id="hintButton">💡 Show Hint</button>
-      <p id="hintText" style="display:none;"></p>
-      <div id="options"></div>
-      <button id="submitButton">Submit Answer</button>
-    </div>
-
-    <div id="resultCard" class="card" style="display:none;">
-      <h2>🎉 Quiz Complete!</h2>
-      <p>Your final score is: <span id="finalScore"></span></p>
-      <div id="summary"></div>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
