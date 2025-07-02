@@ -1,86 +1,61 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f5f8fa;
+    text-align: center;
+    background-color: #f5f8fb;
     margin: 0;
     padding: 0;
 }
 
 .container {
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 1000px;
+    margin: auto;
     padding: 20px;
-    text-align: center;
 }
 
-h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
-
-.button-grid {
+.grid {
     display: grid;
-    grid-template-columns: repeat(5, 60px);
+    grid-template-columns: repeat(5, 1fr);
     gap: 10px;
-    justify-content: center;
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
 
-button {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #fff;
-    transition: background-color 0.3s;
-}
-
-button:hover:not(:disabled) {
-    background-color: #f0f0f0;
-}
-
-button.active {
-    background-color: #ccc;
-}
-
-button:disabled {
-    background-color: #eee;
-    cursor: not-allowed;
-}
-
-.card {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    max-width: 600px;
-    margin: 20px auto;
-    text-align: left;
-}
-
-.option-button {
-    display: block;
-    width: 100%;
-    margin: 8px 0;
-    text-align: left;
-}
-
-.hint {
-    background-color: #fff3cd;
-    border: 1px solid #ffeeba;
+.grid button {
     padding: 10px;
-    border-radius: 5px;
-    margin-top: 10px;
+    cursor: not-allowed;
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 4px;
 }
 
-.correct {
-    color: green;
+.grid button.active {
+    background-color: #a0d2eb;
     font-weight: bold;
 }
 
-.incorrect {
-    color: red;
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid #000;
+    background-color: white;
 }
 
-.hidden {
-    display: none;
+.card {
+    background: #f0f0f0;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.option {
+    margin: 10px 0;
+}
+
+.option input {
+    margin-right: 10px;
+}
+
+#summary div {
+    margin-bottom: 20px;
 }
