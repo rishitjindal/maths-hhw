@@ -1,61 +1,75 @@
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f5f8fb;
+    background-color: #f5f8fa;
     margin: 0;
-    padding: 0;
-}
-
-.container {
-    max-width: 1000px;
-    margin: auto;
     padding: 20px;
+    text-align: center;
 }
 
-.grid {
+h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.button-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, 60px);
     gap: 10px;
-    margin: 20px 0;
-}
-
-.grid button {
-    padding: 10px;
-    cursor: not-allowed;
-    background-color: #e0e0e0;
-    border: none;
-    border-radius: 4px;
-}
-
-.grid button.active {
-    background-color: #a0d2eb;
-    font-weight: bold;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 button {
-    padding: 10px 20px;
-    margin: 10px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     cursor: pointer;
-    border-radius: 4px;
-    border: 1px solid #000;
-    background-color: white;
+    background-color: #fff;
+}
+
+button.active {
+    background-color: #ccc;
+}
+
+button:disabled {
+    background-color: #eee;
+    cursor: not-allowed;
 }
 
 .card {
-    background: #f0f0f0;
+    background-color: #f9f9f9;
     padding: 20px;
-    margin-top: 20px;
+    border: 1px solid #ccc;
     border-radius: 10px;
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: left;
 }
 
-.option {
-    margin: 10px 0;
+.option-button {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+    text-align: left;
 }
 
-.option input {
-    margin-right: 10px;
+.hint {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
-#summary div {
-    margin-bottom: 20px;
+.correct {
+    color: green;
+    font-weight: bold;
+}
+
+.incorrect {
+    color: red;
+}
+
+.hidden {
+    display: none;
 }
