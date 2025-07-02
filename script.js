@@ -11,24 +11,46 @@ let asked = [];
 let current = -1;
 let userAnswers = {};
 
-document.getElementById('rollDiceBtn').addEventListener('click', rollDice);
+const rollButton = document.getElementById('rollDiceBtn');
+const quizContainer = document.getElementById('quiz');
+const resultContainer = document.getElementById('result');
+const questionGrid = document.getElementById('questionGrid');
+
+flashcards.forEach((_, index) => {
+  const gridBtn = document.createElement('button');
+  gridBtn.className = 'grid-button';
+  gridBtn.innerText = `Q${index + 1}`;
+  gridBtn.disabled = true;
+  questionGrid.appendChild(gridBtn);
+});
+
+rollButton.addEventListener('click', rollDice);
 
 function rollDice() {
   if (asked.length === flashcards.length) {
     showResults();
     return;
   }
-  
+
   let available = flashcards.map((_, i) => i).filter(i => !asked.includes(i));
   current = available[Math.floor(Math.random() * available.length)];
   asked.push(current);
+  updateGrid();
   showQuestion(current);
+}
+
+function updateGrid() {
+  const buttons = document.querySelectorAll('.grid-button');
+  buttons.forEach((btn, index) => {
+    if (asked.includes(index)) {
+      btn.style.backgroundColor = '#a0a0a0';
+    }
+  });
 }
 
 function showQuestion(index) {
   const card = flashcards[index];
-  const container = document.getElementById("quiz");
-  container.innerHTML = `
+  quizContainer.innerHTML = `
     <div class="card">
       <p><strong>Q${index + 1}:</strong> ${card.question}</p>
       <button onclick="toggleHint()">💡 Show Hint</button>
@@ -68,10 +90,15 @@ function submitAnswer() {
     alert("❌ Incorrect. Correct answer: " + correct.map(i => card.options[i]).join(", "));
   }
 
-  document.getElementById("quiz").innerHTML = '';
+  quizContainer.innerHTML = '';
+
+  if (asked.length === flashcards.length) {
+    showResults();
+  }
 }
 
 function showResults() {
+  rollButton.disabled = true;
   let resultHTML = `<h2>🎉 Quiz Complete! Your score: ${score}</h2>`;
   flashcards.forEach((card, index) => {
     resultHTML += `
@@ -89,6 +116,6 @@ function showResults() {
       </div>
     `;
   });
-  document.getElementById("quiz").innerHTML = '';
-  document.getElementById("result").innerHTML = resultHTML;
+  quizContainer.innerHTML = '';
+  resultContainer.innerHTML = resultHTML;
 }
